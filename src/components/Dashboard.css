@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    justify-content: center;
+    display: flex;
+    font: 100px "Helvetica Neue";
+    color: #AF2f2f26;
+    font-weight: lighter;
+}
+.input{
+    padding: 16px 16px 16px 60px;
+    font: 24px "Helvetica Neue" ;
+    font-weight: 300;
+    width: 60vw;
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3),
+    0 -2px 0 0 rgba(0, 0, 0, 0);
+    justify-content: center;
+
+}
