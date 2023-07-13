@@ -1,9 +1,10 @@
 import './Dashboard.css';
 import React, {useState} from "react";
+import {} from ''
 
 const Dashboard = () => {
     const [newItem, setNewItem] = useState('')
-    const [todos, setTodos] = useState( []as string[])
+    const [todos, setTodos] = useState([] as string[])
 
     const handleKeyPress = (event: any) => {
         console.log(event)
@@ -22,13 +23,16 @@ const Dashboard = () => {
                    onChange={(e) => setNewItem(e.target.value)}
                    onKeyPress={handleKeyPress}
             />
-            <ul>
-                {
-                    todos.map((todos, index) => (
-                        <li key={index}>{todos}</li>
-                    ))
-                }
-            </ul>
+
+            {
+                todos.map((todos, index) => (
+                    <div key={index}>
+                        {todos}
+                        <DeleteOutlined />
+                    </div>
+                ))
+            }
+
         </div>
     )
 }
