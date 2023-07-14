@@ -1,6 +1,7 @@
 import './Dashboard.css';
 import React, {useState} from "react";
-import {} from ''
+// import {DeleteOutlined} from "@ant-design/icons";
+import {CloseOutlined } from '@ant-design/icons';
 
 const Dashboard = () => {
     const [newItem, setNewItem] = useState('')
@@ -23,16 +24,19 @@ const Dashboard = () => {
                    onChange={(e) => setNewItem(e.target.value)}
                    onKeyPress={handleKeyPress}
             />
-
             {
                 todos.map((todos, index) => (
-                    <div key={index}>
-                        {todos}
-                        <DeleteOutlined />
+                    <div
+                        key={index}
+                        // style={{display: 'flex'}}
+                        className={'listItem'}
+                    >
+                        <div style={{flex: 0, padding: 10}}>o</div>
+                        <p style={{flex: 1}}>{todos}</p>
+                        <CloseOutlined style={{ color: 'IndianRed', padding: 10 }} />
                     </div>
                 ))
             }
-
         </div>
     )
 }
