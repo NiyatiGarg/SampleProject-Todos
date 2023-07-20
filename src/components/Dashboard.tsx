@@ -39,18 +39,18 @@ const Dashboard = () => {
         setTodos(newTodos);
     }
     const applyFilters = (todo: any) => {
-            if (completedButton && activeButton) {
-                return todo;
-            }
-            if (completedButton) {
-                return todo.checked;
-            }
-            if (activeButton) {
-                return !todo.checked
-            }
+        if (!completedButton && !activeButton) {
             return todo;
+        }
+        if (completedButton) {
+            return todo.checked;
+        }
+        if (activeButton) {
+            return !todo.checked
+        }
+        return todo;
     }
-
+    const [hoveredItemIndex, setHoveredItemIndex] = useState<number | null>(null);
 
     return (
         <div className={'container'}>
@@ -71,17 +71,27 @@ const Dashboard = () => {
                     <div
                         key={index}
                         className={'listItem'}
+                        onMouseEnter={() => setHoveredItemIndex(index)}
+                        onMouseLeave={() => setHoveredItemIndex(null)}
                     >
                         <Checkbox
                             checked={todo.checked}
-                            style={{flex: 1, justifyContent: 'flex-start', display: 'flex'}}
+                            style={{
+                                flex: 1,
+                                justifyContent: 'flex-start',
+                                display: 'flex',
+                                gap: 10,
+                                borderRadius: '50%',
+                            }}
                             onChange={(e) => {
                                 onChange(e, index)
                             }}
                         >{GenUtils.capitalizeFirstLetter(todo.message)}</Checkbox>
-                        <CloseOutlined
+                        {hoveredItemIndex === index &&
+                            <CloseOutlined
                             onClick={() => DeleteItem(index)}
-                            style={{color: 'IndianRed', padding: 10}}/>
+                            style={{color: 'IndianRed', padding:'0 10px'}}/>
+                        }
                     </div>
                 ))}
             {todos.length ?
@@ -89,11 +99,10 @@ const Dashboard = () => {
                     <p style={{position: 'absolute'}}>{todos.length} items left</p>
                     <div style={{display: 'flex', justifyContent: 'center', flex: 1}}>
                         <button
-                            className={'filterButtons' + (activeButton && completedButton ? ' active' : '')}
-                            style={{border: '1px solid rgba(234, 118, 118, 0.29)', borderRadius: 3}}
+                            className={'filterButtons' + (!activeButton && !completedButton ? ' active' : '')}
                             onClick={() => {
-                                setCompletedButton(true)
-                                setActiveButton(true)
+                                setCompletedButton(false)
+                                setActiveButton(false)
                             }}
                         >All
                         </button>
@@ -101,6 +110,7 @@ const Dashboard = () => {
                             className={'filterButtons' + (activeButton ? ' active' : '')}
                             onClick={() => {
                                 setActiveButton(v => !v)
+                                setCompletedButton(false)
                             }}
                         >Active
                         </button>
@@ -108,6 +118,7 @@ const Dashboard = () => {
                             className={'filterButtons' + (completedButton ? ' active' : '')}
                             onClick={() => {
                                 setCompletedButton(v => !v)
+                                setActiveButton(false)
                             }}>Completed
                         </button>
                     </div>

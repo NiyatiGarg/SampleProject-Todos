@@ -29,6 +29,7 @@
     font: 15px "Helvetica Neue";
     font-weight: 300;
     width: 64.5vw;
+    height:35px;
     background: white;
     flex-direction: row;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.38),
@@ -61,10 +62,17 @@
 }
 .active {
     display: flex;
-    background: #a5a3a3;
-    border: none;
+    border-radius: 3px;
+    border: 1px solid rgba(234, 118, 118, 0.29);
     font-weight: 300;
     font-size: 15px;
-    color: white;
+    font-family: "Helvetica Neue";
+}
+.filterButtons:hover {
+    display: flex;
+    border-radius: 3px;
+    border: 1px solid rgba(179, 96, 96, 0.11);
+    font-weight: 300;
+    font-size: 15px;
     font-family: "Helvetica Neue";
 }
