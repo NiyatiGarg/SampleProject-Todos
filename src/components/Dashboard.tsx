@@ -1,6 +1,6 @@
 import './Dashboard.css';
 import React, {useState} from "react";
-import {CloseOutlined} from '@ant-design/icons';
+import {CloseOutlined, DownOutlined} from '@ant-design/icons';
 import GenUtils from "../utils/GenUtils";
 import {Checkbox} from "antd/lib";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
@@ -57,20 +57,24 @@ const Dashboard = () => {
             <div className={'header'}>
                 todos
             </div>
-            <input
-                value={newItem}
-                className={'input'}
-                placeholder='What needs to be done?'
-                onChange={(e) =>
-                    setNewItem(e.target.value)
-                }
-                onKeyPress={handleKeyPress}
-            />
+            <div className={'content-parent'}>
+            <div  className={'input-parent'}>
+                <DownOutlined className={'icon'}/>
+                <input
+                    className={'input'}
+                    value={newItem}
+                    placeholder='What needs to be done?'
+                    onChange={(e) =>
+                        setNewItem(e.target.value)
+                    }
+                    onKeyPress={handleKeyPress}
+                />
+            </div>
             {
                 todos.filter(applyFilters).map((todo, index) => (
                     <div
                         key={index}
-                        className={'listItem'}
+                        className={todo.checked ? 'completed' : 'listItem'}
                         onMouseEnter={() => setHoveredItemIndex(index)}
                         onMouseLeave={() => setHoveredItemIndex(null)}
                     >
@@ -88,15 +92,15 @@ const Dashboard = () => {
                             }}
                         >{GenUtils.capitalizeFirstLetter(todo.message)}</Checkbox>
                         {hoveredItemIndex === index &&
-                            <CloseOutlined
+                        <CloseOutlined
                             onClick={() => DeleteItem(index)}
-                            style={{color: 'IndianRed', padding:'0 10px'}}/>
+                            style={{color: 'IndianRed', padding: '0 10px'}}/>
                         }
                     </div>
                 ))}
             {todos.length ?
                 <div className={'filters'}>
-                    <p style={{position: 'absolute'}}>{todos.length} items left</p>
+                    <p style={{position: 'absolute'}}>{todos.filter(todo => !todo.checked).length} items left</p>
                     <div style={{display: 'flex', justifyContent: 'center', flex: 1}}>
                         <button
                             className={'filterButtons' + (!activeButton && !completedButton ? ' active' : '')}
@@ -125,6 +129,7 @@ const Dashboard = () => {
                 </div>
                 : null
             }
+            </div>
         </div>
     )
 };

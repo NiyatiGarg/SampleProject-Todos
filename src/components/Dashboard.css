@@ -11,47 +11,75 @@
     color: #AF2f2f26;
     font-weight: lighter;
 }
+.content-parent{
+    box-shadow: 0 2px 4px 2px rgba(143, 141, 141, 0.3),
+    0 0 2px 0 rgba(0, 0, 0, 0);
+}
+.input-parent {
+    display: flex;
+    flex-direction: row;
+}
 
-.input{
-    padding: 16px 16px 16px 60px;
-    font: 24px "Helvetica Neue" ;
+.icon {
+    display: flex;
+    padding: 0;
+    width: 5vw;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    background: white;
+   color: #b5b3b3;
+    /*box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);*/
+    /*0 -2px 0 0 rgba(0, 0, 0, 0);*/
+}
+
+.input {
+    padding: 16px;
+    font: 24px "Helvetica Neue";
     font-weight: 300;
     width: 60vw;
     border: none;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3),
-    0 -2px 0 0 rgba(0, 0, 0, 0);
-    /*justify-content: flex-start;*/
-}
+    }
 
 .listItem {
     display: flex;
     padding: 5px;
     font: 15px "Helvetica Neue";
     font-weight: 300;
-    width: 64.5vw;
-    height:35px;
+    height: 35px;
     background: white;
     flex-direction: row;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.38),
-    0 -2px 0 0 rgba(0, 0, 0, 0.04);
     align-items: center;
+    border-top: 1px solid #e3e3e3;
 }
 
-.filters{
+.completed {
+    display: flex;
+    padding: 5px;
+    font: 15px "Helvetica Neue";
+    font-weight: 200;
+    color: #a2a0a0;
+    height: 35px;
+    border-top: 1px solid #e3e3e3;
+    background: white;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: line-through;
+}
+
+.filters {
     display: flex;
     padding: 10px 5px 10px 5px;
     font: 15px "Helvetica Neue";
     font-weight: 200;
-    width: 64.5vw;
     background: white;
     flex-direction: row;
     color: gray;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.38),
-    0 -2px 0 0 rgba(0, 0, 0, 0.04);
     align-items: center;
+    border-top: 1px solid #e3e3e3;
 }
 
-.filterButtons{
+.filterButtons {
     display: flex;
     background: transparent;
     border: none;
@@ -60,6 +88,7 @@
     color: gray;
     font-family: "Helvetica Neue";
 }
+
 .active {
     display: flex;
     border-radius: 3px;
@@ -68,6 +97,7 @@
     font-size: 15px;
     font-family: "Helvetica Neue";
 }
+
 .filterButtons:hover {
     display: flex;
     border-radius: 3px;
