@@ -16,6 +16,7 @@ const Dashboard = () => {
     const [newItem, setNewItem] = useState('' as string)
     const [checked, setChecked] = useState(false)
 
+    const [dropdownOpen, setDropdownOpen] = useState(true);
     const [completedButton, setCompletedButton] = useState(false)
     const [activeButton, setActiveButton] = useState(false)
 
@@ -52,83 +53,102 @@ const Dashboard = () => {
     }
     const [hoveredItemIndex, setHoveredItemIndex] = useState<number | null>(null);
 
+    const ClearCompleted=(todos:any)=>{
+        const active= todos.filter((todo:any) => !todo.checked)
+        const newTodos = [...todos];
+        newTodos.splice(active, active.length);
+        setTodos(active);
+    }
+
     return (
         <div className={'container'}>
             <div className={'header'}>
                 todos
             </div>
             <div className={'content-parent'}>
-            <div  className={'input-parent'}>
-                <DownOutlined className={'icon'}/>
-                <input
-                    className={'input'}
-                    value={newItem}
-                    placeholder='What needs to be done?'
-                    onChange={(e) =>
-                        setNewItem(e.target.value)
-                    }
-                    onKeyPress={handleKeyPress}
-                />
-            </div>
-            {
-                todos.filter(applyFilters).map((todo, index) => (
-                    <div
-                        key={index}
-                        className={todo.checked ? 'completed' : 'listItem'}
-                        onMouseEnter={() => setHoveredItemIndex(index)}
-                        onMouseLeave={() => setHoveredItemIndex(null)}
-                    >
-                        <Checkbox
-                            checked={todo.checked}
-                            style={{
-                                flex: 1,
-                                justifyContent: 'flex-start',
-                                display: 'flex',
-                                gap: 10,
-                                borderRadius: '50%',
-                            }}
-                            onChange={(e) => {
-                                onChange(e, index)
-                            }}
-                        >{GenUtils.capitalizeFirstLetter(todo.message)}</Checkbox>
-                        {hoveredItemIndex === index &&
-                        <CloseOutlined
-                            onClick={() => DeleteItem(index)}
-                            style={{color: 'IndianRed', padding: '0 10px'}}/>
+                <div className={'input-parent'}>
+                    <DownOutlined className={'icon'} onClick={() => setDropdownOpen(prevState => !prevState)}/>
+                    <input
+                        className={'input'}
+                        value={newItem}
+                        placeholder='What needs to be done?'
+                        onChange={(e) =>
+                            setNewItem(e.target.value)
                         }
-                    </div>
-                ))}
-            {todos.length ?
-                <div className={'filters'}>
-                    <p style={{position: 'absolute'}}>{todos.filter(todo => !todo.checked).length} items left</p>
-                    <div style={{display: 'flex', justifyContent: 'center', flex: 1}}>
-                        <button
-                            className={'filterButtons' + (!activeButton && !completedButton ? ' active' : '')}
-                            onClick={() => {
-                                setCompletedButton(false)
-                                setActiveButton(false)
-                            }}
-                        >All
-                        </button>
-                        <button
-                            className={'filterButtons' + (activeButton ? ' active' : '')}
-                            onClick={() => {
-                                setActiveButton(v => !v)
-                                setCompletedButton(false)
-                            }}
-                        >Active
-                        </button>
-                        <button
-                            className={'filterButtons' + (completedButton ? ' active' : '')}
-                            onClick={() => {
-                                setCompletedButton(v => !v)
-                                setActiveButton(false)
-                            }}>Completed
-                        </button>
-                    </div>
+                        onKeyPress={handleKeyPress}
+                    />
                 </div>
-                : null
-            }
+                {dropdownOpen && <div>
+                    {
+                        todos.filter(applyFilters).map((todo, index) => (
+                            <div
+                                key={index}
+                                className={todo.checked ? 'completed' : 'listItem'}
+                                onMouseEnter={() => setHoveredItemIndex(index)}
+                                onMouseLeave={() => setHoveredItemIndex(null)}
+                            >
+                                <Checkbox
+                                    checked={todo.checked}
+                                    style={{
+                                        flex: 1,
+                                        justifyContent: 'flex-start',
+                                        display: 'flex',
+                                        gap: 10,
+                                        borderRadius: '50%',
+                                    }}
+                                    onChange={(e) => {
+                                        onChange(e, index)
+                                    }}
+                                >{GenUtils.capitalizeFirstLetter(todo.message)}</Checkbox>
+                                {hoveredItemIndex === index &&
+                                <CloseOutlined
+                                    onClick={() => DeleteItem(index)}
+                                    style={{color: 'IndianRed', padding: '0 10px'}}/>
+                                }
+                            </div>
+                        ))
+                    }
+                    {todos.length ?
+                        <div className={'filters'}>
+                            <p style={{position: 'absolute', padding: 5 }}>{todos.filter(todo => !todo.checked).length} items
+                                left</p>
+                            <div style={{display: 'flex', justifyContent: 'center', flex: 1}}>
+                                <button
+                                    className={'filterButtons' + (!activeButton && !completedButton ? ' active' : '')}
+                                    onClick={() => {
+                                        setCompletedButton(false)
+                                        setActiveButton(false)
+                                    }}
+                                >All
+                                </button>
+                                <button
+                                    className={'filterButtons' + (activeButton ? ' active' : '')}
+                                    onClick={() => {
+                                        setActiveButton(v => !v)
+                                        setCompletedButton(false)
+                                    }}
+                                >Active
+                                </button>
+                                <button
+                                    className={'filterButtons' + (completedButton ? ' active' : '')}
+                                    onClick={() => {
+                                        setCompletedButton(v => !v)
+                                        setActiveButton(false)
+                                    }}>Completed
+                                </button>
+                            </div>
+                            {
+                                todos.filter(todo => todo.checked).length ?
+                                    <button className={'filterButtons'}
+                                            onClick={() => ClearCompleted(todos)}>
+                                        Clear completed
+                                    </button>: ''
+                            }
+                        </div>
+                        : null
+                    }
+                </div>
+                }
             </div>
         </div>
     )

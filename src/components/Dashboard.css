@@ -29,15 +29,13 @@
     font-weight: 500;
     background: white;
    color: #b5b3b3;
-    /*box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);*/
-    /*0 -2px 0 0 rgba(0, 0, 0, 0);*/
 }
 
 .input {
     padding: 16px;
-    font: 24px "Helvetica Neue";
+    font: 20px "Helvetica Neue";
     font-weight: 300;
-    width: 60vw;
+    width: 45vw;
     border: none;
     }
 
@@ -69,14 +67,15 @@
 
 .filters {
     display: flex;
-    padding: 10px 5px 10px 5px;
-    font: 15px "Helvetica Neue";
+    padding: 5px;
+    font: 14px "Helvetica Neue";
     font-weight: 200;
     background: white;
     flex-direction: row;
     color: gray;
     align-items: center;
     border-top: 1px solid #e3e3e3;
+    justify-content: space-between;
 }
 
 .filterButtons {
