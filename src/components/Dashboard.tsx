@@ -56,6 +56,7 @@ const Dashboard = () => {
         return todo;
     }
     const [hoveredItemIndex, setHoveredItemIndex] = useState<number | null>(null);
+    const [doubleClickedItemIndex, setDoubleClickedItemIndex] = useState<number | null>(null);
 
     const ClearCompleted = (todos: any) => {
         const active = todos.filter((todo: any) => !todo.checked)
@@ -97,46 +98,52 @@ const Dashboard = () => {
                                 className={todo.checked ? 'completed' : 'listItem'}
                                 onMouseEnter={() => setHoveredItemIndex(index)}
                                 onMouseLeave={() => setHoveredItemIndex(null)}
-                            >
-                                <Checkbox
-                                    checked={todo.checked}
+                                onDoubleClick={() => {setEditing(true)
+                                    setDoubleClickedItemIndex(index)}}
+                            >{
+                                doubleClickedItemIndex === index && editing ?
+                                <input
                                     style={{
-                                        flex: 1,
-                                        justifyContent: 'flex-start',
                                         display: 'flex',
-                                        gap: 10,
-                                        borderRadius: '50%',
+                                        padding: '14px',
+                                        margin: '0 -5px 0 25px',
+                                        border: '1px solid #a09f9f',
+                                        boxShadow: 'inset 0px 0px 2px 2px rgba(0.1, 0.1, 0.1, 0.1)',
+                                        width: '100%'
+
                                     }}
-                                    onChange={(e) => {
-                                        onChange(e, index)
+                                    value={newInputValue}
+                                    onChange={(e) => setNewInputValue(e.target.value)}
+                                    onKeyPress={(e) => {
+                                        if (e.key === "Enter") {
+                                            UpdateItem(index, newInputValue);
+                                        }
                                     }}
-                                >{hoveredItemIndex === index && editing?
-                                    <input
-                                        value={newInputValue}
-                                        onChange={(e) => setNewInputValue(e.target.value)}
-                                        onKeyPress={(e) => {
-                                            if (e.key === "Enter") {
-                                                UpdateItem(index, newInputValue);
-                                            }
+                                /> :
+                                <div style={{display:'flex'}}>
+                                    <Checkbox
+                                        checked={todo.checked}
+                                        style={{
+                                            flex: 1,
+                                            justifyContent: 'flex-start',
+                                            display: 'flex',
+                                            gap: 10,
+                                            borderRadius: '50%',
                                         }}
-                                    />
-                                    :
-                                    GenUtils.capitalizeFirstLetter(todo.message)
-                                }
-                                </Checkbox>
-                                {hoveredItemIndex === index &&
-                                <div style={{display: 'flex'}}>
+                                        onChange={(e) => {
+                                            onChange(e, index)
+                                        }}
+                                    >
+
+                                        {GenUtils.capitalizeFirstLetter(todo.message)}
+                                    </Checkbox>
+                                    {hoveredItemIndex === index && !editing &&
                                     <CloseOutlined
                                         onClick={() => DeleteItem(index)}
                                         style={{color: 'IndianRed', padding: '0 10px'}}/>
-                                    <span
-                                        onClick={() => {
-                                            setEditing(true)
-                                        }
-                                        }
-                                        style={{padding: '0 10px'}}>edit </span>
+                                    }
                                 </div>
-                                }
+                            }
                             </div>
                         ))
                     }
