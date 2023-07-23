@@ -20,6 +20,10 @@ const Dashboard = () => {
     const [completedButton, setCompletedButton] = useState(false)
     const [activeButton, setActiveButton] = useState(false)
 
+    const [editing, setEditing] = useState(false);
+    const [newInputValue, setNewInputValue] = useState('')
+
+
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && newItem.trim() !== "") {
             setTodos([...todos, {message: newItem, checked: false}]);
@@ -53,11 +57,18 @@ const Dashboard = () => {
     }
     const [hoveredItemIndex, setHoveredItemIndex] = useState<number | null>(null);
 
-    const ClearCompleted=(todos:any)=>{
-        const active= todos.filter((todo:any) => !todo.checked)
+    const ClearCompleted = (todos: any) => {
+        const active = todos.filter((todo: any) => !todo.checked)
         const newTodos = [...todos];
         newTodos.splice(active, active.length);
         setTodos(active);
+    }
+
+    const UpdateItem = (index: number, newMessage: string) => {
+        const newTodos = [...todos];
+        newTodos[index].message = newMessage;
+        setTodos(newTodos);
+        setEditing(false);
     }
 
     return (
@@ -99,18 +110,42 @@ const Dashboard = () => {
                                     onChange={(e) => {
                                         onChange(e, index)
                                     }}
-                                >{GenUtils.capitalizeFirstLetter(todo.message)}</Checkbox>
+                                >{hoveredItemIndex === index && editing?
+                                    <input
+                                        value={newInputValue}
+                                        onChange={(e) => setNewInputValue(e.target.value)}
+                                        onKeyPress={(e) => {
+                                            if (e.key === "Enter") {
+                                                UpdateItem(index, newInputValue);
+                                            }
+                                        }}
+                                    />
+                                    :
+                                    GenUtils.capitalizeFirstLetter(todo.message)
+                                }
+                                </Checkbox>
                                 {hoveredItemIndex === index &&
-                                <CloseOutlined
-                                    onClick={() => DeleteItem(index)}
-                                    style={{color: 'IndianRed', padding: '0 10px'}}/>
+                                <div style={{display: 'flex'}}>
+                                    <CloseOutlined
+                                        onClick={() => DeleteItem(index)}
+                                        style={{color: 'IndianRed', padding: '0 10px'}}/>
+                                    <span
+                                        onClick={() => {
+                                            setEditing(true)
+                                        }
+                                        }
+                                        style={{padding: '0 10px'}}>edit </span>
+                                </div>
                                 }
                             </div>
                         ))
                     }
                     {todos.length ?
                         <div className={'filters'}>
-                            <p style={{position: 'absolute', padding: 5 }}>{todos.filter(todo => !todo.checked).length} items
+                            <p style={{
+                                position: 'absolute',
+                                padding: 5
+                            }}>{todos.filter(todo => !todo.checked).length} items
                                 left</p>
                             <div style={{display: 'flex', justifyContent: 'center', flex: 1}}>
                                 <button
@@ -142,7 +177,7 @@ const Dashboard = () => {
                                     <button className={'filterButtons'}
                                             onClick={() => ClearCompleted(todos)}>
                                         Clear completed
-                                    </button>: ''
+                                    </button> : ''
                             }
                         </div>
                         : null
