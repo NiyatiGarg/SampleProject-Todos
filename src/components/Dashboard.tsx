@@ -95,7 +95,7 @@ const Dashboard = () => {
                         todos.filter(applyFilters).map((todo, index) => (
                             <div
                                 key={index}
-                                className={todo.checked ? 'completed' : 'listItem'}
+                                className={todo.checked && !editing ? 'completed' : 'listItem'}
                                 onMouseEnter={() => setHoveredItemIndex(index)}
                                 onMouseLeave={() => setHoveredItemIndex(null)}
                                 onDoubleClick={() => {setEditing(true)
@@ -120,7 +120,7 @@ const Dashboard = () => {
                                         }
                                     }}
                                 /> :
-                                <div style={{display:'flex'}}>
+                                <div style={{display:'flex', width: '100%'}}>
                                     <Checkbox
                                         checked={todo.checked}
                                         style={{
@@ -134,10 +134,9 @@ const Dashboard = () => {
                                             onChange(e, index)
                                         }}
                                     >
-
                                         {GenUtils.capitalizeFirstLetter(todo.message)}
                                     </Checkbox>
-                                    {hoveredItemIndex === index && !editing &&
+                                    {hoveredItemIndex === index &&
                                     <CloseOutlined
                                         onClick={() => DeleteItem(index)}
                                         style={{color: 'IndianRed', padding: '0 10px'}}/>
