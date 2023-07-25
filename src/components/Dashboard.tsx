@@ -1,12 +1,14 @@
-import './Dashboard.css';
 import React, {useState} from "react";
-import {CloseOutlined, DownOutlined} from '@ant-design/icons';
 import GenUtils from "../utils/GenUtils";
+
+import {CloseOutlined, DownOutlined} from '@ant-design/icons';
 import {Checkbox} from "antd/lib";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 
+import './Dashboard.css';
 
 interface TodoItem {
+    key: number;
     message: string;
     checked: boolean;
 }
@@ -26,7 +28,7 @@ const Dashboard = () => {
 
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && newItem.trim() !== "") {
-            setTodos([...todos, {message: newItem, checked: false}]);
+            setTodos([...todos, {key: Date.now(),message: newItem, checked: false}]);
             setNewItem("");
         }
     };
@@ -65,11 +67,16 @@ const Dashboard = () => {
         setTodos(active);
     }
 
-    const UpdateItem = (index: number, newMessage: string) => {
+    const UpdateItem = (key: number, newMessage: string) => {
         const newTodos = [...todos];
-        newTodos[index].message = newMessage;
-        setTodos(newTodos);
-        setEditing(false);
+        const selectedTodo = todos.find(t => t.key === key);
+        let index = -1;
+        if (selectedTodo) {
+            index = todos.indexOf(selectedTodo);
+            newTodos.splice(index, 1, { ...selectedTodo, message: newMessage , key: key});
+            setTodos(newTodos);
+            setEditing(false);
+        }
     }
 
     return (
@@ -94,7 +101,7 @@ const Dashboard = () => {
                     {
                         todos.filter(applyFilters).map((todo, index) => (
                             <div
-                                key={index}
+                                key={todo.key}
                                 className={todo.checked && !editing ? 'completed' : 'listItem'}
                                 onMouseEnter={() => setHoveredItemIndex(index)}
                                 onMouseLeave={() => setHoveredItemIndex(null)}
@@ -116,7 +123,7 @@ const Dashboard = () => {
                                     onChange={(e) => setNewInputValue(e.target.value)}
                                     onKeyPress={(e) => {
                                         if (e.key === "Enter") {
-                                            UpdateItem(index, newInputValue);
+                                            UpdateItem(todo.key, newInputValue);
                                         }
                                     }}
                                 /> :
