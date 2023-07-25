@@ -41,7 +41,7 @@
 
 .listItem {
     display: flex;
-    padding: 5px;
+    padding: 16px;
     font: 24px "Helvetica Neue";
     font-weight: 300;
     height: 35px;
@@ -54,7 +54,7 @@
 
 .completed {
     display: flex;
-    padding: 5px;
+    padding: 16px;
     font:24px "Helvetica Neue";
     font-weight: 200;
     color: #a2a0a0;
@@ -68,7 +68,7 @@
 
 .filters {
     display: flex;
-    padding: 5px;
+    padding: 10px;
     font: 14px "Helvetica Neue";
     font-weight: 200;
     background: white;
