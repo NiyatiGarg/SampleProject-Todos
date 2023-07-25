@@ -131,17 +131,14 @@ const Dashboard = () => {
                                     <Checkbox
                                         checked={todo.checked}
                                         style={{
-                                            // flex: 1,
                                             justifyContent: 'flex-start',
-                                            // display: 'flex',
                                             gap: 10,
                                             borderRadius: '50%',
                                         }}
                                         onChange={(e) => {
                                             onChange(e, index)
                                         }}
-                                    >
-                                    </Checkbox>
+                                    />
                                     <p style={{display:'flex', flex:1 }}>{GenUtils.capitalizeFirstLetter(todo.message)}</p>
                                     {hoveredItemIndex === index &&
                                     <CloseOutlined
