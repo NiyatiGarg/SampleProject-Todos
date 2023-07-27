@@ -120,15 +120,7 @@ const Dashboard = () => {
                             >{
                                 doubleClickedItemIndex === index && editing ?
                                 <input
-                                    style={{
-                                        display: 'flex',
-                                        padding: '14px',
-                                        margin: '0 -5px 0 25px',
-                                        border: '1px solid #a09f9f',
-                                        boxShadow: 'inset 0px 0px 2px 2px rgba(0.1, 0.1, 0.1, 0.1)',
-                                        width: '100%'
-
-                                    }}
+                                    className={'edit-input'}
                                     placeholder={todo.message}
                                     value={newInputValue}
                                     onChange={(e) => setNewInputValue(e.target.value)}
