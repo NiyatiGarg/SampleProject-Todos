@@ -77,6 +77,10 @@ const Dashboard = () => {
             setTodos(newTodos);
             setEditing(false);
         }
+        if (newMessage.trim() === "") {
+            // Don't update the item if the new message is empty or contains only whitespaces
+            return;
+        }
     }
 
     return (
@@ -105,6 +109,12 @@ const Dashboard = () => {
                                 className={todo.checked && !editing ? 'completed' : 'listItem'}
                                 onMouseEnter={() => setHoveredItemIndex(index)}
                                 onMouseLeave={() => setHoveredItemIndex(null)}
+                                onClick={()=> {
+                                    if (index !== doubleClickedItemIndex) {
+                                        setEditing(false);
+                                    }
+                                }
+                                }
                                 onDoubleClick={() => {setEditing(true)
                                     setDoubleClickedItemIndex(index)}}
                             >{
@@ -119,6 +129,7 @@ const Dashboard = () => {
                                         width: '100%'
 
                                     }}
+                                    placeholder={todo.message}
                                     value={newInputValue}
                                     onChange={(e) => setNewInputValue(e.target.value)}
                                     onKeyPress={(e) => {
