@@ -12,7 +12,7 @@
     font-weight: lighter;
 }
 .content-parent{
-    box-shadow: 0 2px 4px 2px rgba(143, 141, 141, 0.3),
+    box-shadow: 0 1px 10px 1px rgba(143, 141, 141, 0.3),
     0 0 2px 0 rgba(0, 0, 0, 0);
 }
 .input-parent {
@@ -69,7 +69,7 @@
     align-items: center;
     text-decoration: line-through;
 }
-.edit-input {
+.edit-input{
     padding: 20px;
     font: 20px "Helvetica Neue";
     font-weight: 300;
@@ -77,6 +77,9 @@
     border: 1px solid #a09f9f;
     margin: 0 -15px 0 25px;
     box-shadow: inset 0px 0px 2px 2px rgba(0.1, 0.1, 0.1, 0.1);
+}
+.edit-input::placeholder{
+    color:black;
 }
 
 .filters {
